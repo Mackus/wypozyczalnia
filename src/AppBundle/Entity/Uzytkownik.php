@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * Uzytkownik
@@ -10,16 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="uzytkownik")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UzytkownikRepository")
  */
-class Uzytkownik
+class Uzytkownik extends BaseUser
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var string
@@ -28,7 +21,18 @@ class Uzytkownik
      */
     private $saldo;
 
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
     /**
      * Get id
      *
