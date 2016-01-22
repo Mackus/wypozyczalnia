@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Zamowienie</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ zamowienie.id }}</td>
+            </tr>
+            <tr>
+                <th>Dataodbioru</th>
+                <td>{% if zamowienie.dataOdbioru %}{{ zamowienie.dataOdbioru|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Utworzono</th>
+                <td>{% if zamowienie.utworzono %}{{ zamowienie.utworzono|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('zamowienia_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

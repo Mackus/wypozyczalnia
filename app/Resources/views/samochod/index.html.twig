@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="col-md-3">
+        <p class="lead">Kategorie</p>
+        <div class="list-group">
+            <a href="{{ path('samochody_index') }}" class="list-group-item">Wszystkie</a>
+            {% set kategorie = [] %}
+            {% for samochod in samochods %}
+                {% if samochod.kategoria not in kategorie %}
+                   <a href="{{ path('samochody_index', {'category': samochod.kategoria}) }}" class="list-group-item">{{ samochod.kategoria }}</a>
+
+                    {% set kategorie = kategorie|merge([samochod.kategoria]) %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <h1>Samochod list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nazwa</th>
+                <th>Opis</th>
+                <th>Rokprodukcji</th>
+                <th>Kosztwynajmu</th>
+                <th>Dostepnychsztuk</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for samochod in samochods %}
+            <tr>
+                <td><a href="{{ path('samochody_show', { 'id': samochod.id }) }}">{{ samochod.id }}</a></td>
+                <td>{{ samochod.nazwa }}</td>
+                <td>{{ samochod.opis }}</td>
+                <td>{{ samochod.rokProdukcji }}</td>
+                <td>{{ samochod.kosztWynajmu }}</td>
+                <td>{{ samochod.dostepnychSztuk }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('samochody_show', { 'id': samochod.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('samochody_edit', { 'id': samochod.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('samochody_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

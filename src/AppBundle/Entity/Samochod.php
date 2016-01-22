@@ -31,9 +31,16 @@ class Samochod
     /**
      * @var string
      *
-     * @ORM\Column(name="kategoria", type="string", length=255)
+     * @ORM\Column(name="kategoria", type="string", length=255, nullable=true)
      */
     private $kategoria;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="zdjecie", type="string", length=255, nullable=true)
+     */
+    private $zdjecie;
 
     /**
      * @var string
@@ -210,6 +217,22 @@ class Samochod
     public function getKategoria()
     {
         return $this->kategoria;
+    }
+
+    /**
+     * @return string
+     */
+    public function getZdjecie()
+    {
+        return $this->zdjecie;
+    }
+
+    /**
+     * @param string $zdjecie
+     */
+    public function setZdjecie($zdjecie)
+    {
+        $this->zdjecie = $zdjecie;
     }
 }
 

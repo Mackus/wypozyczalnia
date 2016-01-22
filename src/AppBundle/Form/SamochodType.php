@@ -3,6 +3,9 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,9 +20,11 @@ class SamochodType extends AbstractType
         $builder
             ->add('nazwa')
             ->add('opis')
-            ->add('rokProdukcji')
-            ->add('kosztWynajmu')
-            ->add('dostepnychSztuk')
+            ->add('rokProdukcji', IntegerType::class)
+            ->add('zdjecie',  UrlType::class)
+            ->add('kategoria')
+            ->add('kosztWynajmu', MoneyType::class)
+            ->add('dostepnychSztuk', IntegerType::class)
         ;
     }
     

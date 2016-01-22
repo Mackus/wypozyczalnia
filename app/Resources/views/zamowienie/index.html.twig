@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Zamowienie list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Dataodbioru</th>
+                <th>Utworzono</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for zamowienie in zamowienies %}
+            <tr>
+                <td><a href="{{ path('zamowienia_show', { 'id': zamowienie.id }) }}">{{ zamowienie.id }}</a></td>
+                <td>{% if zamowienie.dataOdbioru %}{{ zamowienie.dataOdbioru|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if zamowienie.utworzono %}{{ zamowienie.utworzono|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('zamowienia_show', { 'id': zamowienie.id }) }}">show</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}
