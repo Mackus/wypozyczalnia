@@ -31,6 +31,13 @@ class Samochod
     /**
      * @var string
      *
+     * @ORM\Column(name="kategoria", type="string", length=255)
+     */
+    private $kategoria;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="opis", type="text")
      */
     private $opis;
@@ -185,6 +192,24 @@ class Samochod
     public function getDostepnychSztuk()
     {
         return $this->dostepnychSztuk;
+    }
+
+    /**
+     * @param string $kategoria
+     * @return Samochod
+     */
+    public function setKategoria($kategoria)
+    {
+        $this->kategoria = $kategoria;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKategoria()
+    {
+        return $this->kategoria;
     }
 }
 

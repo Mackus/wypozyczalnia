@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Uzytkownik list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Saldo</th>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for uzytkownik in uzytkowniks %}
+            <tr>
+                <td><a href="{{ path('uzytkownicy_show', { 'id': uzytkownik.id }) }}">{{ uzytkownik.saldo }}</a></td>
+                <td>{{ uzytkownik.id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('uzytkownicy_show', { 'id': uzytkownik.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('uzytkownicy_edit', { 'id': uzytkownik.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('uzytkownicy_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

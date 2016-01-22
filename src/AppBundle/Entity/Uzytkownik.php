@@ -19,7 +19,7 @@ class Uzytkownik extends BaseUser
      *
      * @ORM\Column(name="saldo", type="decimal", precision=10, scale=2)
      */
-    private $saldo;
+    private $saldo = 1000;
 
     /**
      * @ORM\Id

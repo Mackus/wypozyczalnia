@@ -1,0 +1,8 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% form_theme form _self %}
+{% block form_group_class -%}
+    col-sm-6
+{% endblock %}
+{% block fos_user_content %}
+{% include "FOSUserBundle:Registration:register_content.html.twig" %}
+{% endblock fos_user_content %}
