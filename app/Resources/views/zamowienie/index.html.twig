@@ -1,29 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Zamowienie list</h1>
+    <h1>Lista zamówień</h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Dataodbioru</th>
-                <th>Utworzono</th>
-                <th>Actions</th>
+                <th>#</th>
+                <th>Nazwa pojazdu</th>
+                <th>Użytkownik</th>
+                <th>Data odbioru</th>
+                <th>Złożono</th>
+                <th>Akcje</th>
             </tr>
         </thead>
         <tbody>
         {% for zamowienie in zamowienies %}
             <tr>
-                <td><a href="{{ path('zamowienia_show', { 'id': zamowienie.id }) }}">{{ zamowienie.id }}</a></td>
-                <td>{% if zamowienie.dataOdbioru %}{{ zamowienie.dataOdbioru|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if zamowienie.utworzono %}{{ zamowienie.utworzono|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ zamowienie.id }}</td>
+                <td><a href="{{ path('samochody_show', {'id': zamowienie.samochod.id}) }}">{{ zamowienie.samochod.nazwa[:50] }}</a></td>
+                <td>{{ zamowienie.uzytkownik }}</td>
+                <td>{% if zamowienie.dataOdbioru %}
+                        {{ zamowienie.dataOdbioru|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if zamowienie.utworzono %}
+                        {{ zamowienie.utworzono|date('Y-m-d H:i:s') }}
+                    {% endif %}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('zamowienia_show', { 'id': zamowienie.id }) }}">show</a>
-                        </li>
-                    </ul>
+                    <div class="btn-group">
+                        {% if zamowienie.status is null %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="btn btn-xs btn-success" href="{{ path('zamowienie_status', { 'id': zamowienie.id, 'status': 'Potwierdzony zwrot' }) }}">Potwierdź zwrot</a>
+                        {% endif %}
+                        <a class="btn btn-xs btn-danger" href="{{ path('zamowienie_status', { 'id': zamowienie.id, 'status': 'Anulowane' }) }}">Anuluj</a>
+                        {% else %}
+                            <span class="badge text-info">{{ zamowienie.status }}</span>
+                        {% endif %}
+                    </div>
                 </td>
             </tr>
         {% endfor %}

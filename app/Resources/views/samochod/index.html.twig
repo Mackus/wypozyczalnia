@@ -5,57 +5,72 @@
         <p class="lead">Kategorie</p>
         <div class="list-group">
             <a href="{{ path('samochody_index') }}" class="list-group-item">Wszystkie</a>
-            {% set kategorie = [] %}
-            {% for samochod in samochods %}
-                {% if samochod.kategoria not in kategorie %}
-                   <a href="{{ path('samochody_index', {'category': samochod.kategoria}) }}" class="list-group-item">{{ samochod.kategoria }}</a>
+            {% set kategorieAdded = [] %}
+            {% for samochod in kategorie %}
+                {% if samochod.kategoria not in kategorieAdded %}
+                   <a href="{{ path('samochody_index', {'category': samochod.kategoria}) }}" class="list-group-item">{{ samochod.kategoria|slice(50) }}</a>
 
-                    {% set kategorie = kategorie|merge([samochod.kategoria]) %}
+                    {% set kategorieAdded = kategorieAdded|merge([samochod.kategoria]) %}
                 {% endif %}
             {% endfor %}
         </div>
     </div>
-    <h1>Samochod list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nazwa</th>
-                <th>Opis</th>
-                <th>Rokprodukcji</th>
-                <th>Kosztwynajmu</th>
-                <th>Dostepnychsztuk</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="col-md-9">
         {% for samochod in samochods %}
-            <tr>
-                <td><a href="{{ path('samochody_show', { 'id': samochod.id }) }}">{{ samochod.id }}</a></td>
-                <td>{{ samochod.nazwa }}</td>
-                <td>{{ samochod.opis }}</td>
-                <td>{{ samochod.rokProdukcji }}</td>
-                <td>{{ samochod.kosztWynajmu }}</td>
-                <td>{{ samochod.dostepnychSztuk }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('samochody_show', { 'id': samochod.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('samochody_edit', { 'id': samochod.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            {% if loop.index0 % 3 == 0 %}
+                {{ loop.index0>0?'</div>':'' }}<div class="row">
+            {% endif %}
 
-    <ul>
-        <li>
-            <a href="{{ path('samochody_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+            <div class="col-sm-4 col-lg-4 col-md-4">
+                <div class="thumbnail">
+                    <a href="{{ path('samochody_show', {'id' : samochod.id}) }}">
+
+                    <div style="
+                            height: 150px;
+                            background-image: url('{{ samochod.zdjecie|default('https://upload.wikimedia.org/wikipedia/commons/5/55/Brak_obrazka.svg') }}');
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                            background-position: center;"></div>
+                    </a>
+                    <div class="caption">
+                        <h4 class="pull-right">{{ samochod.kosztWynajmu }} zł</h4>
+                        <h4><a href="{{ path('samochody_show', {'id': samochod.id}) }}">{{ samochod.nazwa[:20] ~ '...' }}</a>
+                        </h4>
+                        <p>Dostępnych sztuk: {{ samochod.dostepnychSztuk }}</p>
+                        <p>Rok produkcji: {{ samochod.rokProdukcji }}</p>
+                        <p>{{ samochod.opis }}</p>
+                    </div>
+                    <div class="ratings">
+                        <p class="pull-right">{{ samochod|get_order_count }} wypożyczeń</p>
+                        <p>
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                <a href="{{ path('samochody_show', {'id' : samochod.id}) }}" data-toggle="tooltip" data-placement="top" title="Wypożycz">
+                                    <i class="glyphicon glyphicon-star"></i>
+                                </a>
+                            {% endif %}
+
+                            <a href="{{ path('samochody_show', {'id' : samochod.id}) }}">
+                                <i class="glyphicon glyphicon-eye-open"></i>
+                            </a>
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('samochody_edit', {'id': samochod.id}) }}">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 {% endblock %}

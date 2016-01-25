@@ -1,21 +1,20 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme edit_form _self %}
+{% block form_group_class -%}
+    col-sm-6
+{%- endblock form_group_class %}
+
 {% block body %}
-    <h1>Samochod edit</h1>
+    <h1>Edytujesz samochod</h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+        <input type="submit" class="btn btn-success" value="Zaktualizuj" />
     {{ form_end(edit_form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('samochody_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+<hr/>
+<h3>Usuwanie</h3>
+    {{ form_start(delete_form) }}
+    <input class="btn btn-danger" type="submit" value="Usuń">
+    {{ form_end(delete_form) }}
 {% endblock %}

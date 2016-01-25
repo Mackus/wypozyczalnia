@@ -38,7 +38,7 @@ class Zamowienie
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Samochod")
-     * @ORM\JoinColumn(name="samochod_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="samochod_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $samochod;
 
@@ -50,11 +50,18 @@ class Zamowienie
     private $utworzono;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", nullable=true)
+     */
+    private $status;
+
+    /**
      * Zamowienie constructor.
      */
     public function __construct()
     {
-        $this->utworzono = new DateTime();
+        $this->utworzono = new \DateTime();
     }
 
 
@@ -95,7 +102,7 @@ class Zamowienie
     /**
      * Set uzytkownik
      *
-     * @param \stdClass $uzytkownik
+     * @param Uzytkownik $uzytkownik
      *
      * @return Zamowienie
      */
@@ -119,7 +126,7 @@ class Zamowienie
     /**
      * Set samochod
      *
-     * @param \stdClass $samochod
+     * @param Samochod $samochod
      *
      * @return Zamowienie
      */
@@ -162,6 +169,22 @@ class Zamowienie
     public function getUtworzono()
     {
         return $this->utworzono;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param boolean $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 }
 

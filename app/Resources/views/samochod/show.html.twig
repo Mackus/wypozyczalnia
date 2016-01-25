@@ -1,48 +1,30 @@
 {% extends 'base.html.twig' %}
 
+{% block logo %}background: url('{{ samochod.zdjecie }}') no-repeat center;  min-height: 250px;color: black{% endblock %}
+{% block logo_text %}{{ samochod.nazwa[:80] }}{% endblock %}
 {% block body %}
-    <h1>Samochod</h1>
+    <div class="caption-full">
+        <h4 class="pull-right">{{ samochod.kosztWynajmu }} zł</h4>
+        <h4><a href="#">{{ samochod.nazwa|trim(100) }}</a>
+        </h4>
+        <p>Rok produkcji: {{ samochod.rokProdukcji }}. {{ samochod.opis }}</p>
+        <p>Dostępnych sztuk {{ samochod.dostepnychSztuk }}</p>
+    </div>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ samochod.id }}</td>
-            </tr>
-            <tr>
-                <th>Nazwa</th>
-                <td>{{ samochod.nazwa }}</td>
-            </tr>
-            <tr>
-                <th>Opis</th>
-                <td>{{ samochod.opis }}</td>
-            </tr>
-            <tr>
-                <th>Rokprodukcji</th>
-                <td>{{ samochod.rokProdukcji }}</td>
-            </tr>
-            <tr>
-                <th>Kosztwynajmu</th>
-                <td>{{ samochod.kosztWynajmu }}</td>
-            </tr>
-            <tr>
-                <th>Dostepnychsztuk</th>
-                <td>{{ samochod.dostepnychSztuk }}</td>
-            </tr>
-        </tbody>
-    </table>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <form action="{{ path('zamowienie_new', {'id': samochod.id}) }}">
+            <div class="form-group col-xs-5">
+                <label>
+                    Data odbioru
+                    </label>
+                <input class="form-control" type="date" name="dataOdbioru" required="true"/>
+            </div>
+            <div class="col-xs-12">
+                <button type="submit" class="btn btn-success">Wynajmij</button>
+            </div>
+        </form>
+        {% else %}
+        Zaloguj się aby zarezerwować
+    {% endif %}
 
-    <ul>
-        <li>
-            <a href="{{ path('samochody_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('samochody_edit', { 'id': samochod.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock %}

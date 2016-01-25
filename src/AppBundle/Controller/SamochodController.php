@@ -21,16 +21,26 @@ class SamochodController extends Controller
      *
      * @Route("/", name="samochody_index")
      * @Method("GET")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $samochods = $em->getRepository('AppBundle:Samochod')->findAll();
+        if ($category = $request->get('category'))
+        {
+            $samochods = $em->getRepository('AppBundle:Samochod')->findBy(['kategoria' => $category]);
+
+        } else {
+            $samochods = $em->getRepository('AppBundle:Samochod')->findAll();
+        }
+
 
         return $this->render('samochod/index.html.twig', array(
             'samochods' => $samochods,
-        ));
+            'kategorie' => $em->getRepository('AppBundle:Samochod')->createQueryBuilder('s')->select('s.kategoria')->getQuery()->execute()
+    ));
     }
 
     /**
