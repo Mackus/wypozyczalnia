@@ -69,6 +69,7 @@ footer {
     font-family: cursive;
     position: relative;
     top: -50px;
+    margin-left: 40px;
 }
 
 .sb-page-header p {

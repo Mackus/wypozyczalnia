@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Samochod
@@ -53,6 +54,7 @@ class Samochod
      * @var int
      *
      * @ORM\Column(name="rokProdukcji", type="integer")
+     * @Assert\Range(min=2000, max=2016)
      */
     private $rokProdukcji;
 
