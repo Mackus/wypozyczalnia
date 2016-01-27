@@ -24,6 +24,10 @@ class UzytkownikController extends Controller
      */
     public function indexAction()
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('danger', 'Nie masz uprawnien do przeglądania tej strony');
+            return $this->redirectToRoute('samochody_index');
+        }
         $em = $this->getDoctrine()->getManager();
 
         $uzytkowniks = $em->getRepository('AppBundle:Uzytkownik')->findAll();
