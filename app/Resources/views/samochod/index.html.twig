@@ -8,7 +8,7 @@
             {% set kategorieAdded = [] %}
             {% for samochod in kategorie %}
                 {% if samochod.kategoria not in kategorieAdded %}
-                   <a href="{{ path('samochody_index', {'category': samochod.kategoria}) }}" class="list-group-item">{{ samochod.kategoria|slice(50) }}</a>
+                   <a href="{{ path('samochody_index', {'category': samochod.kategoria}) }}" class="list-group-item">{{ samochod.kategoria[0:50]) }}</a>
 
                     {% set kategorieAdded = kategorieAdded|merge([samochod.kategoria]) %}
                 {% endif %}
