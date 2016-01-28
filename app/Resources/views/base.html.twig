@@ -88,7 +88,7 @@
     <!-- /.container -->
 </nav>
 {% block header %}
-    <header class="sb-page-header" style="{% block logo %}background: url(/logo.jpg) no-repeat center;background-size:contain;{% endblock %}">
+    <header class="sb-page-header" style="{% block logo %}background: url({{ asset('logo.jpg') }}) no-repeat center;background-size:contain;{% endblock %}">
         <div class="container">
             <h1>{% block logo_text %}{% endblock %}</h1>
             <p></p>
