@@ -68,7 +68,7 @@ class ZamowienieController extends Controller
         $em = $this->getDoctrine()->getManager();
         $this->addFlash('success', 'Pomyslnie zmieniono status zamówienia');
 
-        $em->persist($zamowienie);
+        $zamowienie->getSamochod()->setDostepnychSztuk($zamowienie->getSamochod()->getDostepnychSztuk()+1);
         $em->flush();
 
         return $this->redirectToRoute('zamowienia_index');

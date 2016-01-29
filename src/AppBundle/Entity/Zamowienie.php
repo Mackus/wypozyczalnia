@@ -140,7 +140,7 @@ class Zamowienie
     /**
      * Get samochod
      *
-     * @return \stdClass
+     * @return Samochod
      */
     public function getSamochod()
     {
